@@ -1,21 +1,24 @@
 import ballerina/io;
 import ballerina/test;
-import ballerina/config;
+//import ballerina/config;
 //import ballerina/log;
 
 DBConfig cconfig = {
-        baseUrl: config:getAsString("BASE_URL"),
+        baseUrl: "http://localhost:8080",
         secureSocket: true
     };
 
-DBClient dbCli = new(cconfig);
+    DBClient dbCli = new(cconfig);
+
 
 @test:Config{}
-function testCallGet(){
+function testCallPost(){
+
+    
     
     io:println("\n ---------------------------------------------------------------------------");
 
-    json|error result = dbCli.getRecord(1);
+    json|error result = dbCli.insertRecord({"name":"sirini","age":34,"gender":"female"});
 
     if result is json{
             io:println(result);
@@ -27,11 +30,11 @@ function testCallGet(){
 }
 
 @test:Config{}
-function testCallPost(){
+function testCallGet(){
     
     io:println("\n ---------------------------------------------------------------------------");
 
-    json|error result = dbCli.insertRecord({"name":"ruvi","age":34,"gender":"female"});
+    json|error result = dbCli.getRecord(4);
 
     if result is json{
             io:println(result);
@@ -47,7 +50,7 @@ function testCallPut(){
     
     io:println("\n ---------------------------------------------------------------------------");
 
-    json|error result = dbCli.updateRecord({"name":"ruvini","age":34,"gender":"female","id":3});
+    json|error result = dbCli.updateRecord({"name":"ruvini","age":34,"gender":"female","id":7});
 
     if result is json{
             io:println(result);
@@ -63,7 +66,7 @@ function deleteRecord(){
     
     io:println("\n ---------------------------------------------------------------------------");
 
-    json|error result = dbCli.deleteRecord(3);
+    json|error result = dbCli.deleteRecord(10);
 
     if result is json{
             io:println(result);
